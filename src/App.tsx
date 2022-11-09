@@ -3,6 +3,7 @@ import './App.css';
 import FavoritesProductsScreen from './screens/FavoritesProductsScreen';
 import Nav from './components/Nav';
 import ProductsScreen from './screens/ProductsScreen';
+import ProductScreen from './screens/ProductScreen';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Routes>
         <Route path='/' element={<ProductsScreen />}></Route>
         <Route path='/favorites' element={<FavoritesProductsScreen />}></Route>
+        <Route path='/product/:id' element={<ProductScreen />}></Route>
       </Routes>
     </Router>
   );
