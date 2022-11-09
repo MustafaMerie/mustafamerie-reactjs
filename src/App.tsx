@@ -1,16 +1,16 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import FavoritesProducts from './components/FavoritesProducts';
+import FavoritesProductsScreen from './screens/FavoritesProductsScreen';
 import Nav from './components/Nav';
-import ProductsList from './components/ProductsList';
+import ProductsScreen from './screens/ProductsScreen';
 
 function App() {
   return (
     <Router>
       <Nav />
       <Routes>
-        <Route path='/' element={<ProductsList />}></Route>
-        <Route path='/favorites' element={<FavoritesProducts />}></Route>
+        <Route path='/' element={<ProductsScreen />}></Route>
+        <Route path='/favorites' element={<FavoritesProductsScreen />}></Route>
       </Routes>
     </Router>
   );

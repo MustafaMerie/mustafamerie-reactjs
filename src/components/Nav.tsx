@@ -40,7 +40,7 @@ function Nav() {
                     color="dark"
                 >
                     {
-                        mockCategories.map(category => <Dropdown.Item>{category.title}</Dropdown.Item>)
+                        mockCategories.map(category => <Dropdown.Item key={category.title}>{category.title}</Dropdown.Item>)
                     }
 
                 </Dropdown>
