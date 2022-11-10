@@ -36,7 +36,6 @@ function Nav() {
 
                 <Dropdown
                     label="Categories"
-                    dismissOnClick={false}
                     color="dark"
                 >
                     {
@@ -44,10 +43,9 @@ function Nav() {
                     }
 
                 </Dropdown>
-                <Button className="mx-1.5" color="light"
-                >
+                <NavLink to="/addProduct" className='ml-2 text-sm px-4 py-2.5 text-white bg-gray-800 border border-transparent hover:bg-gray-900 focus:ring-4 focus:ring-gray-300 disabled:hover:bg-gray-800 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-800 dark:border-gray-700 dark:disabled:hover:bg-gray-800 group flex h-min items-center justify-center text-center font-medium focus:z-10 rounded-lg' >
                     Add Product +
-                </Button>
+                </NavLink>
                 <Navbar.Toggle />
             </div>
             <Navbar.Collapse>
