@@ -1,13 +1,14 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from 'flowbite-react'
 import { HeartIcon } from '@heroicons/react/24/outline'
-// import { HeartIcon as SolidHeartIcon } from '@heroicons/react/20/solid'
+import { HeartIcon as SolidHeartIcon } from '@heroicons/react/20/solid'
 import { ArrowLeftIcon } from '@heroicons/react/20/solid'
 import { useAppDispatch, useAppSelector } from '../hooks/useTypedSelector';
 import { useEffect } from 'react';
 import { getProduct } from '../features/productSlice';
 import Loading from "../components/Loading";
 import Message from "../components/Message";
+import { addToFavorites, removeFromFavorites } from '../features/favoritesSlice';
 
 function ProductScreen() {
 
@@ -17,6 +18,7 @@ function ProductScreen() {
   const dispatch = useAppDispatch();
 
   const { loading, data, error } = useAppSelector((state) => state.productSlice);
+  const favorites = useAppSelector((state) => state.favoritesSlice.data);
 
   useEffect(() => {
     dispatch(getProduct(params.id));
@@ -55,11 +57,20 @@ function ProductScreen() {
 
             <p className="mt-2 mb-4 font-normal text-gray-700">{data?.description}</p>
 
-            <Button size="xs" color="dark"> Add to favorites
-              <div className='w-5 m-1'>
-                <HeartIcon />
-              </div>
-            </Button>
+            {
+              favorites && favorites.some(p => data?._id === p._id) ?
+                <Button color="dark" size="xs" className='mr-3' onClick={() => (dispatch(removeFromFavorites(data?._id)))}> Remove form favorites
+                  <div className='w-5 m-1'>
+                    <SolidHeartIcon />
+                  </div>
+                </Button>
+                :
+                <Button color="dark" size="xs" className='mr-3' onClick={() => (dispatch(addToFavorites(data)))}> Add to favorites
+                  <div className='w-5 m-1'>
+                    <HeartIcon />
+                  </div>
+                </Button>
+            }
           </div>
         </div>
       }
