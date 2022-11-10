@@ -1,10 +1,11 @@
 import ProductModal from '../models/productModal'
 import { Card, Button } from 'flowbite-react'
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { HeartIcon, TrashIcon } from '@heroicons/react/24/outline'
-import { useAppDispatch } from '../hooks/useTypedSelector';
+import { useAppDispatch, useAppSelector } from '../hooks/useTypedSelector';
 import { deleteProduct } from '../features/productsSlice';
-// import { HeartIcon as SolidHeartIcon } from '@heroicons/react/20/solid'
+import { addToFavorites, removeFromFavorites } from '../features/favoritesSlice';
+import { HeartIcon as SolidHeartIcon } from '@heroicons/react/20/solid'
 
 interface ProductProps {
   product: ProductModal;
@@ -13,9 +14,13 @@ interface ProductProps {
 function Product(props: ProductProps) {
   const dispatch = useAppDispatch();
 
+  const location = useLocation()
+
   const {
     product: { _id, name, avatar, price },
   } = props;
+
+  const data = useAppSelector((state) => state.favoritesSlice.data);
 
   return (
 
@@ -34,22 +39,28 @@ function Product(props: ProductProps) {
       </Link>
 
       <div className='flex flex-row justify-center'>
-        <Button size="xs" className='mr-3'> Add to favorites
-          <div className='w-5 m-1'>
-            <HeartIcon />
-          </div>
-        </Button>
-        <Button size="xs" color="failure" onClick={() => (dispatch(deleteProduct(_id)))}>
-          <div className='w-5 m-1'>
-            <TrashIcon />
-          </div>
-        </Button>
+        {
+          data && data.some(p => _id === p._id) ?
+            <Button size="xs" className='mr-3' onClick={() => (dispatch(removeFromFavorites(_id)))}> Remove form favorites
+              <div className='w-5 m-1'>
+                <SolidHeartIcon />
+              </div>
+            </Button>
+            :
+            <Button size="xs" className='mr-3' onClick={() => (dispatch(addToFavorites(props.product)))}> Add to favorites
+              <div className='w-5 m-1'>
+                <HeartIcon />
+              </div>
+            </Button>
+        }
+        {
+          !location.pathname.includes('/favorites') && <Button size="xs" color="failure" onClick={() => (dispatch(deleteProduct(_id)))}>
+            <div className='w-5 m-1'>
+              <TrashIcon />
+            </div>
+          </Button>
+        }
       </div>
-      {/* <Button size="xs"> Remove form favorites
-        <div className='w-5 m-1'>
-          <SolidHeartIcon />
-        </div>
-      </Button> */}
     </Card>
 
   )
