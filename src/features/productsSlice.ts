@@ -1,9 +1,8 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-
 import Product from "../models/productModal";
-
 import { BASE_URL } from "../api";
+import { CUSTOM_CATYGORY } from "./categoriesSlice";
 
 interface ProductsContainer {
   products: Product[];
@@ -37,18 +36,24 @@ interface ProductState {
   loading: boolean;
   error: string | null;
   data: Product[] | null;
+  filterBy: string;
 }
 
 const initialState = {
   loading: false,
   error: null,
   data: null,
+  filterBy: CUSTOM_CATYGORY.ALL.name,
 } as ProductState;
 
 const productsSlice = createSlice({
   name: "products",
   initialState,
-  reducers: {},
+  reducers: {
+    filterBy(state, action) {
+      state.filterBy = action.payload;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(getProducts.pending, (state, action) => {
@@ -67,5 +72,9 @@ const productsSlice = createSlice({
       });
   },
 });
+
+const { actions } = productsSlice;
+
+export const { filterBy } = actions;
 
 export default productsSlice.reducer;

@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { Dropdown, Navbar } from 'flowbite-react'
 import { useAppDispatch, useAppSelector } from "../hooks/useTypedSelector";
 import { getCatygories } from "../features/categoriesSlice";
+import { filterBy } from "../features/productsSlice";
 import Loading from "./Loading";
 
 function Nav() {
@@ -14,6 +15,7 @@ function Nav() {
     }, [dispatch]);
 
     const { loading, data, error } = useAppSelector((state) => state.catygoriesSlice);
+    const filter = useAppSelector((state) => state.productsSlice.filterBy);
 
 
     return (
@@ -32,11 +34,11 @@ function Nav() {
             <div className="flex md:order-2">
 
                 <Dropdown
-                    label={error ? error : "Categories"}
+                    label={error ? error : filter}
                     color="dark"
                 >
 
-                    {loading ? <Loading /> : data?.map(category => <Dropdown.Item key={category._id}>{category.name}</Dropdown.Item>)}
+                    {loading ? <Loading /> : data?.map(category => <Dropdown.Item onClick={() => dispatch(filterBy(category.name))} key={category._id}>{category.name}</Dropdown.Item>)}
 
                 </Dropdown>
                 <NavLink to="/addProduct" className='ml-2 text-sm px-4 py-2.5 text-white bg-gray-800 border border-transparent hover:bg-gray-900 focus:ring-4 focus:ring-gray-300 disabled:hover:bg-gray-800 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-800 dark:border-gray-700 dark:disabled:hover:bg-gray-800 group flex h-min items-center justify-center text-center font-medium focus:z-10 rounded-lg' >

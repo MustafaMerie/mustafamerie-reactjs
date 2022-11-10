@@ -8,6 +8,13 @@ interface CatygoriesContainer {
   message: string;
 }
 
+export const CUSTOM_CATYGORY = {
+  ALL: {
+    _id: "all_catygories",
+    name: "All",
+  },
+};
+
 export const getCatygories = createAsyncThunk(
   "catygories/getCatygories",
   async (data, thunkApi) => {
@@ -55,7 +62,10 @@ const catygoriesSlice = createSlice({
         getCatygories.fulfilled,
         (state, action: PayloadAction<Category[]>) => {
           state.loading = false;
-          state.data = action.payload;
+          state.data = [
+            ...action.payload,
+            { _id: CUSTOM_CATYGORY.ALL._id, name: CUSTOM_CATYGORY.ALL.name },
+          ];
         }
       )
       .addCase(getCatygories.rejected, (state, action: PayloadAction<any>) => {
