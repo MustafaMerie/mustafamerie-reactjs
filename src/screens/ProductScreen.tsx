@@ -37,7 +37,7 @@ function ProductScreen() {
         loading ? <Loading /> : error ? <Message color='failure'>{error}</Message> : <div className="container flex flex-col items-center justify-between mx-auto mb-4 md:flex-row">
           <div className="flex-1 mb-10 md:mb-0">
             <div className='m-auto w-80'>
-              <img src={data?.avatar} alt={data?.name} />
+              <img src={data?.avatar} onError={e => { e.currentTarget.src = `https://via.placeholder.com/500/?text=${data?.name}`; }} alt={data?.name} />
 
             </div>
           </div>

@@ -25,7 +25,7 @@ function Product(props: ProductProps) {
   return (
 
     <Card className='m-3'>
-      <img src={avatar} className="object-contain h-48 m-auto w-96" alt={name} />
+      <img src={avatar} onError={e => { e.currentTarget.src = `https://via.placeholder.com/250x300/?text=${name}`; }} className="object-contain h-48 m-auto w-96" alt={name} />
 
       <Link to={`/product/${_id}`}>
         <div className="flex flex-col items-center justify-between">
