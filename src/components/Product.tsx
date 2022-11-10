@@ -1,7 +1,9 @@
 import ProductModal from '../models/productModal'
 import { Card, Button } from 'flowbite-react'
 import { Link } from 'react-router-dom';
-import { HeartIcon } from '@heroicons/react/24/outline'
+import { HeartIcon, TrashIcon } from '@heroicons/react/24/outline'
+import { useAppDispatch } from '../hooks/useTypedSelector';
+import { deleteProduct } from '../features/productsSlice';
 // import { HeartIcon as SolidHeartIcon } from '@heroicons/react/20/solid'
 
 interface ProductProps {
@@ -9,6 +11,7 @@ interface ProductProps {
 }
 
 function Product(props: ProductProps) {
+  const dispatch = useAppDispatch();
 
   const {
     product: { _id, name, avatar, price },
@@ -29,11 +32,19 @@ function Product(props: ProductProps) {
           </span>
         </div>
       </Link>
-      <Button size="xs"> Add to favorites
-        <div className='w-5 m-1'>
-          <HeartIcon />
-        </div>
-      </Button>
+
+      <div className='flex flex-row justify-center'>
+        <Button size="xs" className='mr-3'> Add to favorites
+          <div className='w-5 m-1'>
+            <HeartIcon />
+          </div>
+        </Button>
+        <Button size="xs" color="failure" onClick={() => (dispatch(deleteProduct(_id)))}>
+          <div className='w-5 m-1'>
+            <TrashIcon />
+          </div>
+        </Button>
+      </div>
       {/* <Button size="xs"> Remove form favorites
         <div className='w-5 m-1'>
           <SolidHeartIcon />

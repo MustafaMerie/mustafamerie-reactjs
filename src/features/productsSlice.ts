@@ -53,6 +53,10 @@ const productsSlice = createSlice({
     filterBy(state, action) {
       state.filterBy = action.payload;
     },
+    deleteProduct(state, action) {
+      state.data =
+        state.data && state.data.filter((p) => p._id !== action.payload);
+    },
   },
   extraReducers(builder) {
     builder
@@ -75,6 +79,6 @@ const productsSlice = createSlice({
 
 const { actions } = productsSlice;
 
-export const { filterBy } = actions;
+export const { filterBy, deleteProduct } = actions;
 
 export default productsSlice.reducer;
