@@ -1,24 +1,21 @@
+import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
-
-import { Dropdown, Navbar, Button } from 'flowbite-react'
-
-const mockCategories = [
-    {
-        title: "Electronics",
-    },
-    {
-        title: "Clothing",
-    },
-    {
-        title: "Accessories",
-    },
-    {
-        title: "Furniture",
-    }
-]
-
+import { Dropdown, Navbar } from 'flowbite-react'
+import { useAppDispatch, useAppSelector } from "../hooks/useTypedSelector";
+import { getCatygories } from "../features/categoriesSlice";
+import Loading from "./Loading";
 
 function Nav() {
+
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        dispatch(getCatygories());
+    }, [dispatch]);
+
+    const { loading, data, error } = useAppSelector((state) => state.catygoriesSlice);
+
+
     return (
         <Navbar
         >
@@ -35,12 +32,11 @@ function Nav() {
             <div className="flex md:order-2">
 
                 <Dropdown
-                    label="Categories"
+                    label={error ? error : "Categories"}
                     color="dark"
                 >
-                    {
-                        mockCategories.map(category => <Dropdown.Item key={category.title}>{category.title}</Dropdown.Item>)
-                    }
+
+                    {loading ? <Loading /> : data?.map(category => <Dropdown.Item key={category._id}>{category.name}</Dropdown.Item>)}
 
                 </Dropdown>
                 <NavLink to="/addProduct" className='ml-2 text-sm px-4 py-2.5 text-white bg-gray-800 border border-transparent hover:bg-gray-900 focus:ring-4 focus:ring-gray-300 disabled:hover:bg-gray-800 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-800 dark:border-gray-700 dark:disabled:hover:bg-gray-800 group flex h-min items-center justify-center text-center font-medium focus:z-10 rounded-lg' >
