@@ -1,46 +1,50 @@
-# Getting Started with Create React App
+<!-- ABOUT THE PROJECT -->
+## About The Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Shoopy is a fully responsive, beautifully designed eCommerce platform built with ReactJs, Typescript, Redux toolkit for state management, and TailwindCSS for styling.
 
-## Available Scripts
+### Project Status 
+This project is Completed as v1. 
 
-In the project directory, you can run:
+### Features
+* A grid of products with the ability to navigate to the product page with that product’s information. 
+* The ability to filter the products based on their categories.
+* The ability to add a new product.
+* The ability to delete a product.
+* Add a product to favorites and display the favorite products under the favorites page.
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Technologies used:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+* Typescript
+* Redux toolkit
+* TailwindCSS
 
-### `npm test`
+### Project Screen Shot(s)
+![Screenshot](https://i.ibb.co/TW2Y3F8/Screen-Shot-2022-11-11-at-2-48-30-PM.png)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![Screenshot](https://i.ibb.co/VD5mrDp/Screen-Shot-2022-11-11-at-2-48-55-PM.png)
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Getting Started
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+First, make sure that you are in the root directory, then run:
 
-### `npm run eject`
+```bash
+npm install
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+then:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+npm start
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+The page auto-updates as you edit the file.
 
-## Learn More
+**NOTE:** The project requires `bearer token` in order to run correctly. You can use your own token by creating the `.env` file in the root directory, then put the token under the name `REACT_APP_URL_TOKEN`.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+> REACT_APP_URL_TOKEN='BOPdHe**************************'
