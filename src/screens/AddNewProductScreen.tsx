@@ -1,13 +1,20 @@
 import { Label, TextInput, Button } from 'flowbite-react'
 import { ArrowLeftIcon } from '@heroicons/react/20/solid'
 import { useNavigate } from "react-router-dom";
-import { useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../hooks/useTypedSelector';
+import { addProduct, addProductReset } from '../features/addProductSlice';
+import Message from '../components/Message';
+import { ProductSubmitModal } from '../models/productSubmitModal';
 
 function AddNewProductScreen() {
 
     const navigate = useNavigate()
+    const dispatch = useAppDispatch();
 
-    const [formState, setFormState] = useState({
+    const { loading, message, error } = useAppSelector((state) => state.addProductSlice);
+
+    const [formState, setFormState] = useState<ProductSubmitModal>({
         name: '',
         price: '',
         category: '',
@@ -16,9 +23,9 @@ function AddNewProductScreen() {
         developerEmail: 'mustafanawzatt@gmail.com',
     })
 
-    const handleChange = (e: any) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
-        setFormState(prevState => ({ ...prevState, [name]: value }))
+        setFormState(({ ...formState, [name]: value }))
     }
 
 
@@ -35,7 +42,7 @@ function AddNewProductScreen() {
         {
             id: 'price',
             label: 'Product Price (USD)',
-            type: 'text',
+            type: 'number',
             placeholder: '1800',
             value: formState.price,
             required: true
@@ -82,10 +89,41 @@ function AddNewProductScreen() {
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
-        const [name, price, category, description, avatar, developerEmail] = e.target
-        // console.log(name.value, price.value, category.value, description.value, avatar.value, developerEmail.value);
 
+        const target = e.target as any;
+
+        const product = {
+            name: target.name.value,
+            price: target.price.value,
+            category: target.category.value,
+            description: target.description.value,
+            avatar: target.avatar.value,
+            developerEmail: target.developerEmail.value,
+            id: Math.random()
+        }
+        dispatch(addProduct(product))
     }
+
+    const clearFormAfterSuccessSubmit = () => {
+        setFormState({
+            name: '',
+            price: '',
+            category: '',
+            description: '',
+            avatar: '',
+            developerEmail: 'mustafanawzatt@gmail.com',
+        })
+    }
+
+    useEffect(() => {
+        if (message === 'Success') {
+            clearFormAfterSuccessSubmit()
+            setTimeout(() => {
+                dispatch(addProductReset())
+            }, 3000);
+        }
+    }, [dispatch, message])
+
     return (
         <>
             <div className='m-4 md:mx-auto md:container'>
@@ -99,6 +137,8 @@ function AddNewProductScreen() {
             <div className='m-3 bg-gray-800 rounded-lg'>
 
                 <h1 className='pt-10 text-3xl font-semibold text-center dark:text-white'>Add a new Product</h1>
+                {error && <Message color='failure'>{error}</Message>}
+                {message && <Message>{message}</Message>}
                 <form className="container flex flex-col py-10 mx-auto" onSubmit={handleSubmit}>
 
                     {
@@ -123,9 +163,10 @@ function AddNewProductScreen() {
 
                         )
                     }
-
-                    <Button type="submit">
-                        Submit
+                    <Button type="submit" disabled={loading}>
+                        {
+                            loading ? 'Submitting...' : 'Submit'
+                        }
                     </Button>
                 </form>
             </div>
